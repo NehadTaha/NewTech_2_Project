@@ -9,6 +9,8 @@ import Result from './Result';
 import LeaderBoard from './LeaderBoard';
 import Multiplayer from './Multiplayer';
 import MultiplayerChoice from './multiplayerChoice';
+import Join from './Join';
+import Lobby from './Lobby';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -22,6 +24,8 @@ root.render(
         <Route path='/multiplayer' element={<Multiplayer/>}>
           <Route path="choice" element={<MultiplayerChoice />} />   
     </Route>
+        <Route path='/join' element={<Join/>} />
+        <Route path='/lobby' element={<Lobby/>}/>
       </Routes>
     </BrowserRouter>
 )
