@@ -9,20 +9,25 @@ import Result from './Result';
 import LeaderBoard from './LeaderBoard';
 import Multiplayer from './Multiplayer';
 import MultiplayerChoice from './multiplayerChoice';
+import CreateQuiz from './CreateQuiz';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<Welcome />}/>
-        <Route path='/selectCategory' element={<SelectCategory/>}/>
-        <Route path='/play' element={<Play/>}/>
-        <Route path='/leaderBoard' element={<LeaderBoard/>}/>
-        <Route path='/multiplayer' element={<Multiplayer/>}>
-          <Route path="choice" element={<MultiplayerChoice />} />   
-    </Route>
-      </Routes>
-    </BrowserRouter>
+  <BrowserRouter>
+    <Routes>
+      <Route index element={<Welcome />} />
+      <Route path='/selectCategory' element={<SelectCategory />} />
+      <Route path='/play' element={<Play />} />
+      <Route path='/leaderBoard' element={<LeaderBoard />} />
+      <Route path='/multiplayer' element={<Multiplayer />}>
+        <Route path="choice" element={<MultiplayerChoice />} />
+        <  Route path="create" element={<CreateQuiz />} />
+
+
+      </Route>
+    </Routes>
+  </BrowserRouter>
 )
 
