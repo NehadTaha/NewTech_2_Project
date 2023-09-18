@@ -11,6 +11,8 @@ import Multiplayer from './Multiplayer';
 import MultiplayerChoice from './multiplayerChoice';
 import CreateQuiz from './CreateQuiz';
 
+import Join from './Join';
+import Lobby from './Lobby';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -24,7 +26,8 @@ root.render(
       <Route path='/multiplayer' element={<Multiplayer />}>
         <Route path="choice" element={<MultiplayerChoice />} />
         <  Route path="create" element={<CreateQuiz />} />
-
+        <Route path='/join' element={<Join/>} />
+        <Route path='/lobby' element={<Lobby/>}/>
 
       </Route>
     </Routes>
