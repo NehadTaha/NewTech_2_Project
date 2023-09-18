@@ -12,10 +12,17 @@ function CreateQuiz() {
 
     useEffect(() => {
         if (socket) {
+
             socket.emit('reach10', { count: 20 })
+            // send the time, the number of questions, category and difficulty  to the server
+            socket.on('quizCreated', (data) => {
+                console.log(data);
+                navigate('/Multiplayer/quiz')
+            })
+
 
         } else {
-            navigate('/Multiplayer/create')
+            navigate('/Multiplayer/choice')
             console.log("No socket found");
         }
 
@@ -28,7 +35,9 @@ function CreateQuiz() {
                         <h1 className='mt-5 '>Create Quiz</h1>
                     </div>
                 </div>
+                
                 <div className='row mb-3'>
+
                     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm fw-bold">Time</label>
                     <div class="col-sm-2">
                         <input type="number" class="form-control form-control-sm" id="colFormLabelSm"></input>

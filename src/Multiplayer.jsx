@@ -11,9 +11,7 @@ const SERVER_HOST="http://localhost:5000";
     const navigate = useNavigate();
     useEffect(()=>{
         //on load
-
         socket.current=io(SERVER_HOST);
-
 
         console.log(socket.current);
         navigate('Choice')
