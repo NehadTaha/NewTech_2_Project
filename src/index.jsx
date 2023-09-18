@@ -26,10 +26,11 @@ root.render(
       <Route path='/multiplayer' element={<Multiplayer />}>
         <Route path="choice" element={<MultiplayerChoice />} />
         <  Route path="create" element={<CreateQuiz />} />
-        <Route path='/join' element={<Join/>} />
-        <Route path='/lobby' element={<Lobby/>}/>
+        
 
       </Route>
+      <Route path='/join' element={<Join/>} />
+        <Route path='/lobby' element={<Lobby/>}/>
     </Routes>
   </BrowserRouter>
 )

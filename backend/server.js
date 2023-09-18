@@ -27,10 +27,12 @@ const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
 console.log(`Server listening on port ${PORT}`);
 });
-
+// using io.on to listen and emit events from the server to the client
+//listen to the connection event for incoming sockets and log it to the console
 io.on('connection', (socket) => {
   console.log('socket: ', socket.id);
-  
+  // listen to the event from the client
+  //using  socket.on to listen to the event from the client, where  the event name is  message
   socket.on('reach10', data => {
       console.log('data: ', data);
   })
