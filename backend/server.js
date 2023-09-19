@@ -31,9 +31,27 @@ console.log(`Server listening on port ${PORT}`);
 //listen to the connection event for incoming sockets and log it to the console
 io.on('connection', (socket) => {
   console.log('socket: ', socket.id);
-  // listen to the event from the client
+  //emit the socket id to the client by using an event called new_room_created
+  
+  //using socket.emit to send an event to the client, where the event name is message
+  
+  
   //using  socket.on to listen to the event from the client, where  the event name is  message
   socket.on('reach10', data => {
       console.log('data: ', data);
   })
+  //receive the save settings event from the client
+  socket.on('saveSettings', data => {
+      console.log('data: ', data);
+      socket.emit('new_room_created', {message:"hello from the server"});
+      
+  })
+
+ 
+  // emit the socket id to the client by using an event called new_room_created
+  
+  
+  socket.emit('message', 'Hello World!');
+
 })
+

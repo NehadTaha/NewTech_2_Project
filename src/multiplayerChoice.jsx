@@ -9,6 +9,10 @@ function MultiplayerChoice() {
    //Use this in every component that emits or listens to ws events
     const socket=useContext(SocketContext);
     const navigate=useNavigate();
+    function navToJoinQuiz(){
+        navigate('/multiplayer/join')
+    }
+
     function navToCreateQuiz(){
         navigate('/multiplayer/create')
     }
@@ -30,7 +34,7 @@ function MultiplayerChoice() {
 
         
         <GreyButton text ="Host" onClick={() => navToCreateQuiz()}/>
-        <GreyButton text ="Join"/> 
+        <GreyButton text ="Join" onClick={()=>navToJoinQuiz()}/> 
     </div> 
     </div>
   )
