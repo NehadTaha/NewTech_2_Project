@@ -11,13 +11,10 @@ function CreateQuiz() {
     const socket = useContext(SocketContext);
     const navigate = useNavigate();
     const [time, setTime] = useState(0);
-    console.log(time);
     const [numberOfQuestions, setNumberOfQuestions] = useState(0);
-    console.log(numberOfQuestions);
     const [category, setCategory] = useState('');
-    console.log(category);
     const [difficulty, setDifficulty] = useState('');
-    console.log(difficulty);
+    
    
     function navToLobby(){
         navigate('/multiplayer/lobby')
@@ -27,19 +24,20 @@ function CreateQuiz() {
     function navToChoice(){
         navigate('/multiplayer/choice')
     }
-
-    useEffect(() => {
-        if (socket) {
-
-    //send the time, the number of questions, category and difficulty to the server
-            socket.emit('save_settings', { time, numberOfQuestions, category, difficulty })
-            
-        } else {
-            navigate('/Multiplayer/choice')
-            console.log("No socket found");
+    function onClickHandler(){
+        //socket.emit('save_settings', {time, numberOfQuestions, category, difficulty})
+        navToLobby();
+        socket.on('new_room_created', (data) => {
+            console.log('data', data);
+            // setRoomCode(data);
         }
+    )}
+    useEffect(() => {
+      socket.emit('save_settings', {time, numberOfQuestions, category, difficulty})})
+        
+  
 
-    }, [])
+   
     // Creating an event to the server to save the time, the number of questions, category and difficulty
 
     
@@ -110,7 +108,7 @@ function CreateQuiz() {
                 </div>
                 <div className='row mb-3'>
                     <div className='col-3'>
-                        <GreyButton text ="Create"onClick={() => {navToLobby()}} ></GreyButton>
+                        <GreyButton text ="Create"onClick={() => {onClickHandler()}} ></GreyButton>
                     </div>
                     <div className='col-3'>
                         <GreyButton text="Back" onClick={() => { navToChoice()}}></GreyButton>

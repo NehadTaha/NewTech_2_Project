@@ -1,4 +1,3 @@
-// LobbyComponent.jsx
 import React, { useEffect } from 'react'
 import { useContext } from 'react';
 import { SocketContext } from './SocketContent'
@@ -12,43 +11,29 @@ function LobbyComponent() {
   const navigate = useNavigate();
   const [roomCode, setRoomCode] = useState('');
   const [users, setUsers] = useState([]);
-   
-  useEffect(() => {
-      if(socket){
-      //  console.log(socket.id);
-      //  socket.on('new_room_created', (data) => {
-      //    console.log('room code: ', data)
-      //     setRoomCode(data)
-        
-      //    // console.log('room code: ', data);
-      //   });
-        
-        socket.on('userJoined', (username) => {
-           setUsers([...users, username]);
-          });
-      
-      }
-      else{
-        console.log("No socket found");
-      }
 
-      
-  
-     
-      // return () => {
-      //   socket.disconnect();
-      // };
-    }, [socket]);
-    function navToPlay(){
-        navigate('/multiplayer/hostPlay')
-    }
+  function navToPlay(){
+    navigate('/multiplayer/hostPlay')
+  }
+  if(socket){ 
+    console.log("socket found");
+  }else {
+    
+
+    console.log("No socket found");
+  }
+
+  useEffect(() => {
     socket.on('new_room_created', (data) => {
-      console.log('room code: ', data)
-       setRoomCode(data)
-     
-      // console.log('room code: ', data);
-     });
-    // return the code and the users in the room
+      console.log('data',data);
+      setRoomCode(data);
+    });
+    socket.on('users', (data) => {
+      setUsers(data.users);
+    }); 
+  }, []);
+    
+   
   return (
     <div >
       <div >
@@ -71,6 +56,8 @@ function LobbyComponent() {
     </div>
   );
 };
+
+
 
 
 export default LobbyComponent;
