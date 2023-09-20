@@ -12,47 +12,58 @@ function LobbyComponent() {
   const [roomCode, setRoomCode] = useState('');
   const [users, setUsers] = useState([]);
 
-  function navToPlay(){
+  function navToPlay() {
     navigate('/multiplayer/hostPlay')
   }
-  if(socket){ 
-    console.log("socket found");
-  }else {
-    
-
-    console.log("No socket found");
+  function navToCreateQuiz() {
+    navigate('/multiplayer/create')
   }
-
+  function onClickHandler() {
+    socket.emit('host_start_quiz',{})
+  }
+  
   useEffect(() => {
     socket.on('new_room_created', (data) => {
-      console.log('data',data);
+      console.log('data', data);
       setRoomCode(data);
     });
-    socket.on('users', (data) => {
-      setUsers(data.users);
-    }); 
-  }, []);
+    setTimeout(() => {
+      socket.on('join', (data) => {
+        if(data.code===roomCode){
+          setUsers(data.users);
+        }
+      },500);
+
+        
+      });
+
+       
     
-   
+  }, []);
+
+
   return (
     <div >
       <div >
-      <h1>Room Code: {roomCode} </h1>
+        <h1>Room Code: {roomCode} </h1>
 
-      <div>
-        <h2>Users:</h2>
-        <ul>
-          {users.map((user, index) => (
-            <li key={index}>{user}</li>
-          ))}
-        </ul>
+        <div>
+          <h2>Users:{users}</h2>
+          <ul>
+            {users.map((user, index) => (
+              <li key={index}>{user}</li>
+            ))}
+          </ul>
+        </div>
+        <div className='row mb-3'>
+          <div className='col-3'>
+            <GreyButton text="Start" onClick={() => { navToPlay() }} ></GreyButton>
+          </div>
+          <div className='col-3'>
+            <GreyButton text="Back" onClick={() => { navToCreateQuiz() }}></GreyButton>
+          </div>
+        </div>
       </div>
-      <div className='row mb-3'>
-        <div className='col-3'>
-          <GreyButton text="Start" onClick={() => { navToPlay() }} ></GreyButton>
-    </div>
-    </div>
-    </div>
     </div>
   );
 };

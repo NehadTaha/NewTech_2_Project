@@ -27,20 +27,12 @@ function CreateQuiz() {
     function onClickHandler(){
         //socket.emit('save_settings', {time, numberOfQuestions, category, difficulty})
         navToLobby();
-        socket.on('new_room_created', (data) => {
-            console.log('data', data);
-            // setRoomCode(data);
-        }
-    )}
-    useEffect(() => {
-      socket.emit('save_settings', {time, numberOfQuestions, category, difficulty})})
+        socket.emit('save_settings', {time, numberOfQuestions, category, difficulty})
+    }
         
-  
+       
 
-   
     // Creating an event to the server to save the time, the number of questions, category and difficulty
-
-    
             
     return (
         <div className="container mt-5 pt-5 text-center" style={{ minheight: "100vh" }}>
@@ -118,12 +110,18 @@ function CreateQuiz() {
                 </div>
 
             </div>
-        
-
-
-
+       
     )
 }
+    
+   
+    
+
+
+
+    
+    
+
 
 export default CreateQuiz
 

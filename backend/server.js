@@ -45,6 +45,10 @@ io.on('connection', (socket) => {
         socket.emit('new_room_created', socket.id);
       }, 500)
   })
+  socket.on('join', data => {
+    console.log('join room ', data);
+  })
+
 
  
   // emit the socket id to the client by using an event called new_room_created

@@ -1,15 +1,21 @@
-import React, { useState } from 'react'; // Added useState
-import './index.css'; // Updated import statement
-import { useEffect } from 'react'; // Removed redundant import (useState was added)
-import io from 'socket.io-client';
+import React, { useEffect } from 'react'
+import { useContext } from 'react';
+import { SocketContext } from './SocketContent'
+import { useNavigate } from 'react-router-dom';
+import GreyButton from "./GreyButton";
+import { useState } from 'react';
 
 
 function Join() {
-  const [username, setUsername] = useState(''); // Added state for username
-
+  // Added state for username
+  const socket = useContext(SocketContext);
+  const navigate = useNavigate();
+  const [username, setUsername] = useState(''); 
+  const [code, setCode] = useState('');
   const handleJoin = () => {
-    const socket = io('http://localhost:5000');
-    socket.emit('join', username);
+    
+    socket.emit('join', {username:username,
+      code:code});
     console.log('username: ', username)
     setUsername(''); // Clear username after join
     console.log('username after click: ', username)
@@ -19,7 +25,7 @@ function Join() {
     <div className="joinContainer">
       <div className="inputGroup">
         <label htmlFor="roomCode">Room Code:</label>
-        <input type="text" id="roomCode" />
+        <input type="text" id="roomCode"value={code} onChange={(e) => setCode(e.target.value)} />
       </div>
       <div className="inputGroup mt-3">
         <label htmlFor="username">Username:</label>
