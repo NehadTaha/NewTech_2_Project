@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
   
   //using  socket.on to listen to the event from the client, where  the event name is  message
   socket.on('reach10', data => {
-       console.log('data: ', data);
+       //console.log('data: ', data);
   })
   //receive the save settings event from the client
   socket.on('save_settings', data => {
@@ -50,9 +50,11 @@ io.on('connection', (socket) => {
   })
 
 
- 
-  // emit the socket id to the client by using an event called new_room_created
-  
-
+  socket.on('player_join', data => {
+    console.log('Working socket: ', data);
+    setTimeout(() => {
+      socket.emit('new_player_join', data); 
+    }, 500)
+  })
 })
 

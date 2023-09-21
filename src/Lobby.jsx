@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import GreyButton from "./GreyButton";
 import { useState } from 'react';
 
-
 function LobbyComponent() {
   const socket = useContext(SocketContext);
   const navigate = useNavigate();
@@ -15,40 +14,54 @@ function LobbyComponent() {
   function navToPlay() {
     navigate('/multiplayer/hostPlay')
   }
+
   function navToCreateQuiz() {
     navigate('/multiplayer/create')
   }
-  function onClickHandler() {
-    socket.emit('host_start_quiz',{})
-  }
-  
-  useEffect(() => {
-    socket.on('new_room_created', (data) => {
-      console.log('data', data);
-      setRoomCode(data);
-    });
-    setTimeout(() => {
-      socket.on('join', (data) => {
-        if(data.code===roomCode){
-          setUsers(data.users);
-        }
-      },500);
 
-        
+  function onClickHandler() {
+    socket.emit('host_start_quiz', {})
+  }
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('new_room_created', (data) => {
+        console.log('data', data);
+        setRoomCode(data);
       });
 
-       
-    
+      socket.on('player_join', (data) => {
+        if (data.code === roomCode) {
+          setUsers(JSON.parse(data.username));
+          console.log("usernames:  ", users);
+          setRoomCode(data.roomCode);
+          console.log("username: ", data.username)
+          console.log("roomCode: ", data.roomCode)
+
+        }
+      });
+
+      socket.on('new_player_join', (data) => {
+        console.log('data', data);
+        setUsers((users) => [...users, data.username])
+        setRoomCode(data.roomCode)
+      });
+    } else {
+      navigate('/Multiplayer')
+      console.log("No socket found");
+    }
+
+
   }, []);
+
 
 
   return (
     <div >
       <div >
         <h1>Room Code: {roomCode} </h1>
-
         <div>
-          <h2>Users:{users}</h2>
+          <h2>Users:{users.length}</h2>
           <ul>
             {users.map((user, index) => (
               <li key={index}>{user}</li>
@@ -67,8 +80,5 @@ function LobbyComponent() {
     </div>
   );
 };
-
-
-
 
 export default LobbyComponent;
