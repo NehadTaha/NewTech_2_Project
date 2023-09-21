@@ -13,7 +13,7 @@ const SERVER_HOST="http://localhost:5000";
         //on load
         socket.current=io(SERVER_HOST);
 
-        console.log(socket.current);
+        // console.log(socket.current);
         navigate('Choice')
     },[])
    return (

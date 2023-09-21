@@ -24,11 +24,34 @@ function CreateQuiz() {
     function navToChoice(){
         navigate('/multiplayer/choice')
     }
+    function handleCategoryId(){
+        if(category === "geography"){
+            return 22;
+        }
+        else if(category === "history"){
+            return 23;
+        }
+        else if(category === "politics"){
+            return 24;
+        }
+        else if(category === "sports"){
+            return 21;
+        }
+    }
     function onClickHandler(){
         //socket.emit('save_settings', {time, numberOfQuestions, category, difficulty})
         navToLobby();
         socket.emit('save_settings', {time, numberOfQuestions, category, difficulty})
+        //local storage the category and the category id from the url provided and the difficulty and the number of questions and the time
+        
+        
+
     }
+    localStorage.setItem("category", category);
+        localStorage.setItem("difficulty", difficulty);
+        localStorage.setItem("numberOfQuestions", numberOfQuestions);
+        localStorage.setItem("time", time);
+        localStorage.setItem("categoryId", handleCategoryId());
         
        
 
@@ -76,6 +99,7 @@ function CreateQuiz() {
                             <option selected>Select the Category</option>
                             <option value="geography" 
                             clickHandler="/play?categoryId=22&categoryName=Geography">Geography</option>
+                            
                             <option value="history"clickHandler="/play?categoryId=23&categoryName=History">History</option>
                             <option value="politics"clickHandler="/play?categoryId=24&categoryName=Politics">Politics</option>
                             <option value="sports"clickHandler="/play?categoryId=21&categoryName=Sports">Sports</option>

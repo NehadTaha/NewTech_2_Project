@@ -3,7 +3,7 @@ const bodyParser = require('body-parser'); // For parsing JSON and URL-encoded d
 const socketIo = require('socket.io');
 const cors = require('cors'); // For handling Cross-Origin Resource Sharing
 const http = require('http');
-
+let quizQuestions = [];
 const app = express();
 const server=http.createServer(app);
 const io = socketIo(server, {
@@ -31,28 +31,62 @@ console.log(`Server listening on port ${PORT}`);
 //listen to the connection event for incoming sockets and log it to the console
 io.on('connection', (socket) => {
    console.log('socket: ', socket.id);
- 
+   socket.on('save_settings', data => {
+    console.log('save settings ', data);
+
+    socket.on('reach10', data => {
+      console.log('data: ', data);
+ })
+   
+    setTimeout(() => {
+      socket.emit('new_room_created', socket.id);
+    }, 500)
+  })
+
+    socket.on('player_join',data=> {
+      const { username, roomCode } = data;
+
+    // Join the room if not already in it
+    socket.join(roomCode);
+
+    // Emit the event to the specific room
+    io.to(roomCode).emit('new_player_join', { username, roomCode });
+
+      
+      
+     setTimeout(() => {
+      socket.emit('new_player_join', data);
+     }, 500)
+     
+    })
+    socket.on('host_start_quiz', (roomCode) => {
+      // Emit an event to all players in the room to start the game
+      io.to(roomCode).emit('start_game');
+    });
+    socket.emit('quizQuestions', quizQuestions);
+    
+})
+app.get('/startQuiz', async (req, res) => {
+  // Fetch questions from your trivia API and store them in 'quizQuestions'
+  // ...
+
+  // Broadcast questions to all connected players
+  io.sockets.emit('quizQuestions', quizQuestions);
+
+  res.sendStatus(200);
+});
   
   //using  socket.on to listen to the event from the client, where  the event name is  message
-  socket.on('reach10', data => {
-       console.log('data: ', data);
-  })
-  //receive the save settings event from the client
-  socket.on('save_settings', data => {
-      console.log('save settings ', data);
-     
-      setTimeout(() => {
-        socket.emit('new_room_created', socket.id);
-      }, 500)
-  })
-  socket.on('join', data => {
-    console.log('join room ', data);
-  })
+ 
+  //receive the save settings event from the client and  send the socket id back to the client
+  
+ 
+ 
 
 
  
   // emit the socket id to the client by using an event called new_room_created
   
 
-})
+
 

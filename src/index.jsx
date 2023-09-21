@@ -12,8 +12,10 @@ import MultiplayerChoice from './multiplayerChoice';
 import CreateQuiz from './CreateQuiz';
 import Join from './Join';
 import Lobby from './Lobby';
-// import play function from hostPlay.jsx
+
 import HostPlay from './HostPlay';
+import Wait from './Wait';
+
 
 
 
@@ -23,7 +25,7 @@ root.render(
     <Routes>
       <Route index element={<Welcome />} />
       <Route path='/selectCategory' element={<SelectCategory />} />
-      <Route path='/play' element={<Play />} />
+      
       <Route path='/leaderBoard' element={<LeaderBoard />} />
       <Route path='/multiplayer' element={<Multiplayer />}>
         <Route path="choice" element={<MultiplayerChoice />} />
@@ -31,6 +33,10 @@ root.render(
         <Route path="lobby" element={<Lobby />} />
         <Route path="hostPlay" element={<HostPlay />} />
         <Route path="join" element={<Join />} />
+        <Route path="wait" element={<Wait />} />
+        <Route path="play" element={<Play />} />
+        
+       
 
       </Route>
     </Routes>
