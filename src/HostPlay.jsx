@@ -9,12 +9,11 @@ import Spinner from './Spinner';
 import Result from './Result';
 
 import { openTDhost } from './constants';
-import { useContext } from 'react';
-import { SocketContext } from './SocketContent'
+
  
 
 function HostPlay() {
-    const socket = useContext(SocketContext);
+
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
 
   const [questions, setQuestions] = useState([]);
@@ -46,8 +45,7 @@ function HostPlay() {
  
 
   useEffect(() => {
-    
-    
+
     if (!selectedCategory.id) {
 
       return;
@@ -79,7 +77,6 @@ function HostPlay() {
           setQuestions(body.results);
 
           setIsLoading(false);
-          socket.emit('quizQuestions', body.results);
 
         }
 
@@ -242,3 +239,5 @@ function HostPlay() {
  
 
 export default HostPlay;
+
+ 

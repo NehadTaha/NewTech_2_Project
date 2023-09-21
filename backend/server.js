@@ -66,15 +66,6 @@ io.on('connection', (socket) => {
     socket.emit('quizQuestions', quizQuestions);
     
 })
-app.get('/startQuiz', async (req, res) => {
-  // Fetch questions from your trivia API and store them in 'quizQuestions'
-  // ...
-
-  // Broadcast questions to all connected players
-  io.sockets.emit('quizQuestions', quizQuestions);
-
-  res.sendStatus(200);
-});
   
   //using  socket.on to listen to the event from the client, where  the event name is  message
  
